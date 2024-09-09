@@ -23,11 +23,12 @@ def qpskdetect(x):
         - symbols: Decoded QPSK symbols with normalized energy Es=1
         - bits: Decoded bit sequence (binary vector)
     """
-    I=np.real(x)
-    Q=np.imag(x)
-    symbols=(1/np.sqrt(2))*complex(I,Q)
-    bits=np.zeros(2*len(x),dtype=int)
-    bits[0::2]=(I+1)/2
-    bits[1::2]=(Q+1)/2
+    I = np.sign(np.real(x))
+    Q = np.sign(np.imag(x))
+
+    symbols = (I + 1j * Q)/np.sqrt(2)
+    bits = np.zeros(2*len(x),dtype=int)
+    bits[0::2] = (I+1)/2
+    bits[1::2] = (Q+1)/2
 
     return symbols, bits
